@@ -29,6 +29,8 @@ defmodule DiscussWeb.Router do
     #put "/topic/edit/:id", TopicController, :update
     resources "/", TopicController
 
+    
+
   end
 
   # Other scopes may use custom stacks.

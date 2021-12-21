@@ -1,6 +1,11 @@
 defmodule DiscussWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :discuss
 
+  socket "/socket", DiscussWeb.UserSocket,
+    websocket: true,
+    longpoll: false
+
+
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
@@ -10,8 +15,8 @@ defmodule DiscussWeb.Endpoint do
     signing_salt: "5CJaIgHu"
   ]
 
-  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
-
+  #socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
+  #socket "/socket", DiscussWeb.UserSocket
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phx.digest
