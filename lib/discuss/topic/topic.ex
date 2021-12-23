@@ -3,7 +3,8 @@ use Ecto.Schema
 import Ecto.Changeset
   schema "topics" do
     field :title, :string
-    has_many :comments, Discuss.UsrComment
+    belongs_to :user, Discuss.Accounts.User
+    has_many :comments, Discuss.UsrComment.Comment
   end
 
   def changeset(struct, params \\ %{}) do

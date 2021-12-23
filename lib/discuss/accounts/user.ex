@@ -2,13 +2,14 @@ defmodule Discuss.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+    @derive {Jason.Encoder, only: [:name]}
   schema "users" do
     field :email, :string
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
-    has_many :topic, Discuss.Topic
-    has_many :comments, Discuss.Usrcomment
+    has_many :topics, Discuss.Topic.Topic #, foreign_key: :user_id
+    has_many :comments, Discuss.UsrComment.Comment
     timestamps()
   end
 

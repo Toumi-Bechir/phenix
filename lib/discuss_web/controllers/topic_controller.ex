@@ -6,6 +6,7 @@ defmodule DiscussWeb.TopicController do
   alias Discuss.Example.Topic
   alias Discuss.Topic.Topic
   alias Discuss.Repo
+  #alias Discuss.Ecto
 
   def index(conn, _params) do
     topics = Repo.all(Topic)
@@ -16,13 +17,15 @@ defmodule DiscussWeb.TopicController do
 
   def new(conn, _params) do
     changeset = Topic.changeset(%Topic{}, %{})
-    #changeset = Example.change_topic(%Topic{})
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"topic" => topic_params}) do
 
-  changeset = Topic.changeset(%Topic{}, topic_params)
+  #changeset = Topic.changeset(%Topic{}, topic_params)
+  changeset = conn.assigns.current_user
+  |>Ecto.build_assoc(:topics)
+  |>Topic.changeset(topic_params)
       case Repo.insert(changeset) do
       {:ok, topic} ->
         conn
@@ -35,7 +38,10 @@ defmodule DiscussWeb.TopicController do
   end
 
   def show(conn, %{"id" => id}) do
-    topic = Repo.get!(Topic,id)
+    topic = Repo.get!(Topic, id)
+    IO.puts("++++++++++++Show+++++++++")
+    IO.inspect(topic)
+    IO.puts("++++++++++++Show++++++++++")
     render(conn, "show.html", topic: topic)
   end
 

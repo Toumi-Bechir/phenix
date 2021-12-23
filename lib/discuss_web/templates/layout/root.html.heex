@@ -10,6 +10,11 @@
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
   <body>
+    <script>
+      <%= if @conn.assigns.current_user do %>
+      window.userToken = "<%= Phoenix.Token.sign(DiscussWeb.Endpoint, "key", @conn.assigns.current_user.id) %>"
+      <% end %>
+    </script>
     <header>
       <nav class="navbar navbar-dark bg-dark">
         <div class="nav-wrapper container">
